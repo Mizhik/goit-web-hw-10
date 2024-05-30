@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block style %} {% load static %}
+<link rel="stylesheet" href="{% static 'quotes/main.css' %}" />
+{% endblock %} {% block body %}
+<div class="container">
+  <form method="post">
+    {% csrf_token %} {% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+      {{ form.non_field_errors }}
+    </div>
+    {% endif %}
+
+    <div class="mb-3">
+      <label for="id_quote" class="form-label">Quote</label>
+      {{ form.quote }} {% if form.quote.errors %}
+      <div class="alert alert-danger" role="alert">{{ form.quote.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="id_author_name" class="form-label">Author</label>
+      {{ form.author }} {% if form.author.errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.author.errors }}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="id_tags" class="form-label">Tags</label>
+      {{ form.tags }} {% if form.tags.errors %}
+      <div class="alert alert-danger" role="alert">{{ form.tags.errors }}</div>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="reset" class="btn btn-secondary">Reset</button>
+  </form>
+</div>
+{% endblock %}

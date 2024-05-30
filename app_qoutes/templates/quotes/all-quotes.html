@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% load custom_filters %} {% block style%} 
+{% load static %}
+<link rel="stylesheet" href="{% static 'quotes/main.css' %}" />
+{% endblock %} {% block body%} {% for quote in quotes %}
+<div class="quote-box">
+  <div class="quote">
+    <div class="text-quotes">
+      <div class="text-quote">"{{quote.quote}}"</div>
+    </div>
+    <div>
+      by <span class="author">{{ quote.author.fullname }}</span>
+      <a
+        href="{% url 'quotes:about-author' quote.author.fullname %}"
+        class="about"
+        >(about)</a
+      >
+    </div>
+
+    <div class="tags">
+      <span>Tags:</span>
+      {% for q in quote.tags|split_comma %}
+      <div class="tag">{{ q }}</div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endfor%} {% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% block style %} {% load static %}
+<link rel="stylesheet" href="{% static 'quotes/main.css' %}" />
+{% endblock %} {% block body %}
+
+<div class="quotes">
+  <form method="post">
+    {% csrf_token %} {% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+      {{ form.non_field_errors }}
+    </div>
+    {% endif %}
+
+    <div class="mb-3">
+      <label for="id_quote" class="form-label">Fullname</label>
+      {{ form.fullname }} {% if form.quote.errors %}
+      <div class="alert alert-danger" role="alert">{{ form.quote.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="id_author" class="form-label">Born Date</label>
+      {{ form.born_date }} {% if form.author.errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.author.errors }}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="id_tags" class="form-label">Born Location</label>
+      {{ form.born_location }} {% if form.tags.errors %}
+      <div class="alert alert-danger" role="alert">{{ form.tags.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="id_tags" class="form-label">Description</label>
+      {{ form.description }} {% if form.tags.errors %}
+      <div class="alert alert-danger" role="alert">{{ form.tags.errors }}</div>
+      {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="reset" class="btn btn-secondary">Reset</button>
+  </form>
+</div>
+
+{% endblock %}

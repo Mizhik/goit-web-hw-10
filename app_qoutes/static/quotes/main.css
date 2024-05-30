@@ -1,0 +1,29 @@
+/* login.html */
+.quote-box {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.quote {
+  font-style: italic;
+}
+.author {
+  color: #0066cc;
+  font-weight: bold;
+}
+.about {
+  color: #0066cc;
+  text-decoration: none;
+}
+.tags {
+  margin-top: 10px;
+}
+.tag {
+  background-color: #e0e0e0;
+  padding: 5px 10px;
+  margin-right: 5px;
+  border-radius: 3px;
+  display: inline-block;
+}
