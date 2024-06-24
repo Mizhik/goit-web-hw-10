@@ -1,9 +1,19 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.views import View
 from .forms import QuoteForm, AuthorForm
 from .models import Quote, Author
+
+
+def all_quotes(request):
+    data = Quote.objects.all()
+    per_page = 10
+    paginator = Paginator(data, per_page)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    return render(request, "quotes/all-quotes.html", {"page_obj": page_obj})
 
 
 def about_author(request, author_name: str):
@@ -11,9 +21,9 @@ def about_author(request, author_name: str):
     return render(request, "quotes/about-author.html", context={"author": author})
 
 
-def all_quotes(request):
-    quotes = Quote.objects.all()
-    return render(request, "quotes/all-quotes.html", context={"quotes": quotes})
+# def all_quotes(request):
+#     quotes = Quote.objects.all()
+#     return render(request, "quotes/all-quotes.html", context={"quotes": quotes})
 
 
 class QuoteAdd(View):

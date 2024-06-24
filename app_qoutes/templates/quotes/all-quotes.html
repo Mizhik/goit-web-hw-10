@@ -1,27 +1,52 @@
-{% extends 'base.html' %} {% load custom_filters %} {% block style%} 
-{% load static %}
-<link rel="stylesheet" href="{% static 'quotes/main.css' %}" />
-{% endblock %} {% block body%} {% for quote in quotes %}
-<div class="quote-box">
-  <div class="quote">
-    <div class="text-quotes">
-      <div class="text-quote">"{{quote.quote}}"</div>
-    </div>
-    <div>
-      by <span class="author">{{ quote.author.fullname }}</span>
-      <a
-        href="{% url 'quotes:about-author' quote.author.fullname %}"
-        class="about"
-        >(about)</a
-      >
-    </div>
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block style%} 
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'quotes/main.css' %}" />
+{% endblock %} 
 
-    <div class="tags">
-      <span>Tags:</span>
-      {% for q in quote.tags|split_comma %}
-      <div class="tag">{{ q }}</div>
-      {% endfor %}
+{% block body%}
+  {% for quote in page_obj %}
+    <div class="quote-box">
+      <div class="quote">
+        <div class="text-quotes">
+          <div class="text-quote">"{{quote.quote}}"</div>
+        </div>
+        <div>
+          by <span class="author">{{ quote.author.fullname }}</span>
+          <a
+            href="{% url 'quotes:about-author' quote.author.fullname %}"
+            class="about"
+            >(about)</a
+          >
+        </div>
+
+        <div class="tags">
+          <span>Tags:</span>
+          {% for q in quote.tags|split_comma %}
+            <div class="tag">{{ q }}</div>
+          {% endfor %}
+        </div>
+      </div>
     </div>
+  {% endfor %}
+
+  <!-- Добавление пагинации -->
+  <div class="pagination">
+    <span class="step-links">
+      {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+    </span>
   </div>
-</div>
-{% endfor%} {% endblock %}
+{% endblock %}
